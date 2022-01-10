@@ -1,11 +1,15 @@
 FROM jupyter/scipy-notebook
 
-RUN pip install joblib
+RUN mkdir my_model
+
+ENV MODEL_DIR = /Desktop/My Files/Personal Projects/my_model
+ENV MODEL_FILE_LDA = clf_lda.joblib
+ENV MODEL_FILE_NN  = clf_nn.joblib
 
 COPY train.csv ./train.csv
 COPY test.csv ./test.csv
 
-COPY train.py ./trian.py
+COPY train.py ./train.py
 COPY inference.py ./inference.py
 
 RUN python3 train.py

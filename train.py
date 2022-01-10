@@ -8,18 +8,19 @@ import numpy as np
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.neural_network import MLPClassifier
 import pandas as pd
+import joblib
 from joblib import dump
 from sklearn import preprocessing
 
 def train():
 
-    # Load directory paths for persisting model
+    #Environment variables
+    MODEL_DIR = os.environ['MODEL_DIR']
+    MODEL_FILE_LDA = os.environ['MODEL_FILE_LDA']
+    MODEL_FILE_NN = os.environ['MODEL_FILE_NN']
+    MODEL_PATH_LDA = os.path.join[MODEL_DIR, MODEL_FILE_LDA]
+    MODEL_PATH_NN = os.path.join[MODEL_DIR, MODEL_FILE_NN]
 
-    MODEL_DIR = os.environ["MODEL_DIR"]
-    MODEL_FILE_LDA = os.environ["MODEL_FILE_LDA"]
-    MODEL_FILE_NN = os.environ["MODEL_FILE_NN"]
-    MODEL_PATH_LDA = os.path.join(MODEL_DIR, MODEL_FILE_LDA)
-    MODEL_PATH_NN = os.path.join(MODEL_DIR, MODEL_FILE_NN)
       
     # Load, read and normalize training data
     training = "./train.csv"
@@ -49,8 +50,8 @@ def train():
     clf_NN = MLPClassifier(solver='adam', activation='relu', alpha=0.0001, hidden_layer_sizes=(500,), random_state=0, max_iter=1000)
     clf_NN.fit(X_train, y_train)
        
-    # Secord model
-    from joblib import dump, load
+    # save model
+    from joblib import dump
     dump(clf_NN, MODEL_PATH_NN)
         
 if __name__ == '__main__':
